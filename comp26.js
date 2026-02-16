@@ -6,25 +6,21 @@ let ans = null
 let prob0 = null
 let prob1 = null
 function tunnel() {
-	readline.question(`what is the mass of your particle in kg's\n`, (m) => {
+	readline.question(`what is the mass of your particle in kg's\n`, function askMass(m) {
 		m = Number(m)
 
 		if (isNaN(m)) {
-			console.clear()
-			console.log(`please enter a number\nyou may have included "kg's" or "kilograms" in your response`)
-			return tunnel()
+			return readline.question(`please enter a number\nyou may have included "kg's" or "kilograms" in your response\n`, askMass)
 		}
 
-		readline.question(`what is the particle's energy in J's\n`, (E) => {
+		readline.question(`what is the particle's energy in J's\n`, function askEnergy(E) {
 			E = Number(E)
 
 			if (isNaN(E)) {
-				console.clear()
-				console.log(`please enter a number\nyou may have included "J's" or "joules" in your response`)
-				return tunnel()
+				return readline.question(`please enter a number\nyou may have included "J's" or "joules" in your response\n`, askEnergy)
 			}
 
-			readline.question(`what is your particle's potential barrier height in joules\n`, (V0) => {
+			readline.question(`what is your particle's potential barrier height in joules\n`, function askBarrHeight(V0) {
 				V0 = Number(V0)
 
 				if (E > V0) {
@@ -33,27 +29,21 @@ function tunnel() {
 				}
 
 				if (isNaN(V0)) {
-					console.clear()
-					console.log(`please enter a number\nyou may have included "J's" or "joules" in your response`)
-					return tunnel()
+					return readline.question(`please enter a number\nyou may have included "J's" or "joules" in your response\n`, askBarrHeight)
 				}
 
-				readline.question(`what is your particles barrier width in meters\n`, (a) => {
+				readline.question(`what is your particles barrier width in meters\n`, function askBarrWid(a) {
 					a = Number(a)
 
 					if (isNaN(a)) {
-						console.clear()
-						console.log(`please enter a number you may have included "meters" or "m's" in your response`)
-						return tunnel()
+						return readline.question(`please enter a number you may have included "meters" or "m's" in your response\n`, askBarrWid)
 					}
 
-					readline.question(`what is the reduced Planck constant in joules times seconds\n`, (h) => {
+					readline.question(`what is the reduced Planck constant in joules times seconds\n`, function askPlanck(h) {
 						h = Number(h)
 
 						if (isNaN(h)) {
-							console.clear()
-							console.log(`please enter a number\nyou may have included "joules/J's" or "seconds/S's" in your response`)
-							return tunnel()
+							return readline.question(`please enter a number\nyou may have included "joules/J's" or "seconds/S's" in your response\n`, askPlanck)
 						}
 
 						k = (Math.sqrt((2 * m) * (V0 - E))) / h
@@ -69,49 +59,39 @@ function tunnel() {
 }
 
 function entangle() {
-	readline.question(`what is the amplitude of state 00\n`, (s00) => {
+	readline.question(`what is the amplitude of state 00\n`, function ask00(s00) {
 		s00 = Number(s00)
 
 		if (isNaN(s00)) {
-			console.clear()
-			console.log(`please enter a number`)
-			return entangle()
+			return readline.question(`please enter a number\n`, ask00)
 		}
 
-		readline.question(`what is the amplitude of state 01\n`, (s01) => {
+		readline.question(`what is the amplitude of state 01\n`, function ask01(s01) {
 			s01 = Number(s01)
 
 			if (isNaN(s01)) {
-				console.clear()
-				console.log(`please enter a number`)
-				return entangle()
+				return readline.question(`please enter a number\n`, ask01)
 			}
 
-			readline.question(`what is the amplitude of state 10\n`, (s10) => {
+			readline.question(`what is the amplitude of state 10\n`, function ask10(s10) {
 				s10 = Number(s10)
 
 				if (isNaN(s10)) {
-					console.clear
-					console.log(`please enter a number`)
-					return entangle()
+					return readline.question(`please enter a number\n`, ask10)
 				}
 
-				readline.question(`what is the amplitude of state 11\n`, (s11) => {
+				readline.question(`what is the amplitude of state 11\n`, function ask11(s11) {
 					s11 = Number(s11)
 
 					if (isNaN(s11)) {
-						console.clear()
-						console.log(`please enter a number`)
-						return entangle()
+						return readline.question(`please enter a number\n`, ask11)
 					}
 
-					readline.question(`what is the measurement of particle A, 1 or 0\n`, (A) => {
+					readline.question(`what is the measurement of particle A, 1 or 0\n`, function askMes(A) {
 						A = Number(A)
 
 						if (A !== 1 && A !== 0) {
-							console.clear()
-							console.log(`please enter a number`)
-							return entangle
+							return readline.question(`please enter a 1 or 0\n`, askMes)
 						}
 
 						if (A === 0) {
