@@ -5,20 +5,22 @@ readline = require(`readline`).createInterface({
 let ans = null
 let prob0 = null
 let prob1 = null
+function check(x, func) {
+	if (isNaN(x)) {
+		return readline.question(`please enter a valid number\nyou may have included a symbol ex. N for newtons or J for joules\n`, func)
+	}
+}
+
 function tunnel() {
 	readline.question(`what is the mass of your particle in kg's\n`, function askMass(m) {
 		m = Number(m)
 
-		if (isNaN(m)) {
-			return readline.question(`please enter a number\nyou may have included "kg's" or "kilograms" in your response\n`, askMass)
-		}
+		check(m, askMass)
 
 		readline.question(`what is the particle's energy in J's\n`, function askEnergy(E) {
 			E = Number(E)
 
-			if (isNaN(E)) {
-				return readline.question(`please enter a number\nyou may have included "J's" or "joules" in your response\n`, askEnergy)
-			}
+			check(E, askEnergy)
 
 			readline.question(`what is your particle's potential barrier height in joules\n`, function askBarrHeight(V0) {
 				V0 = Number(V0)
@@ -28,29 +30,25 @@ function tunnel() {
 					dec()
 				}
 
-				if (isNaN(V0)) {
-					return readline.question(`please enter a number\nyou may have included "J's" or "joules" in your response\n`, askBarrHeight)
-				}
+				check(V0, askBarrHeight)
 
 				readline.question(`what is your particles barrier width in meters\n`, function askBarrWid(a) {
 					a = Number(a)
 
-					if (isNaN(a)) {
-						return readline.question(`please enter a number you may have included "meters" or "m's" in your response\n`, askBarrWid)
-					}
+					check(a, askBarrWid)
 
 					readline.question(`what is the reduced Planck constant in joules times seconds\n`, function askPlanck(h) {
 						h = Number(h)
 
-						if (isNaN(h)) {
-							return readline.question(`please enter a number\nyou may have included "joules/J's" or "seconds/S's" in your response\n`, askPlanck)
-						}
+						check(h, askPlanck)
 
-						k = (Math.sqrt((2 * m) * (V0 - E))) / h
-						T = Math.E ** (-2 * k * a)
-						ans = T * 100
-						console.log(`${ans}%`)
-						dec()
+						if (!isNaN(h)) {
+							k = (Math.sqrt((2 * m) * (V0 - E))) / h
+							T = Math.E ** (-2 * k * a)
+							ans = T * 100
+							console.log(`${ans}%`)
+							dec()
+						}
 					});
 				});
 			});
@@ -62,30 +60,22 @@ function entangle() {
 	readline.question(`what is the amplitude of state 00\n`, function ask00(s00) {
 		s00 = Number(s00)
 
-		if (isNaN(s00)) {
-			return readline.question(`please enter a number\n`, ask00)
-		}
+		check(s00, ask00)
 
 		readline.question(`what is the amplitude of state 01\n`, function ask01(s01) {
 			s01 = Number(s01)
 
-			if (isNaN(s01)) {
-				return readline.question(`please enter a number\n`, ask01)
-			}
+			check(s01, ask01)
 
 			readline.question(`what is the amplitude of state 10\n`, function ask10(s10) {
 				s10 = Number(s10)
 
-				if (isNaN(s10)) {
-					return readline.question(`please enter a number\n`, ask10)
-				}
+				check(s10, ask10)
 
 				readline.question(`what is the amplitude of state 11\n`, function ask11(s11) {
 					s11 = Number(s11)
 
-					if (isNaN(s11)) {
-						return readline.question(`please enter a number\n`, ask11)
-					}
+					check(s11, ask11)
 
 					readline.question(`what is the measurement of particle A, 1 or 0\n`, function askMes(A) {
 						A = Number(A)
@@ -112,6 +102,7 @@ function entangle() {
 		});
 	});
 }
+
 function dec() {
 	readline.question(`would you like to\n1: determine chance of quantum tunneling\n2: measure an entangled particle\n`, (choice) => {
 		choice = Number(choice)
