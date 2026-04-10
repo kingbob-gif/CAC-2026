@@ -45,8 +45,7 @@ function tunnel() {
 						if (!isNaN(h)) {
 							k = (Math.sqrt((2 * m) * (V0 - E))) / h
 							T = Math.E ** (-2 * k * a)
-							ans = T * 100
-							console.log(`${ans}%`)
+							console.log(`${eval(T * 100)}%`)
 							dec()
 						}
 					});
@@ -103,13 +102,51 @@ function entangle() {
 	});
 }
 
+function wave() {
+	readline.question(`what is the initial wave function (real part)\nnumber will automatically be divided by the square root of 2\n`, function askFuncReal(wavR) {
+		wavR = Number(wavR / Math.sqrt(2))
+
+		check(wavR, askFuncReal)
+
+		readline.question(`what is the initial wave function (imaginary)\nnumber will automatically be divided by the square root of 2\n`, function askFuncImag(wavI) {
+			wavI = Number(wavI / Math.sqrt(2))
+
+			check(wavI, askFuncImag)
+
+			readline.question(`what is the reduced planck constant in joules times seconds\n`, function askPl(h) {
+				h = Number(h)
+
+				check(h, askPl)
+
+				readline.question(`what is the particles energy in joules\n`, function askE(E) {
+					E = Number(E)
+
+					check(E, askE)
+
+					readline.question(`what time do you want to evaluate the wavefunction at in seconds\n`, function askTime(time) {
+						time = Number(time)
+
+						check(time, askTime)
+
+						if (!isNaN(time)) {
+							theta = (E * time) / h
+							console.log(`real = ${eval((wavR * Math.cos(theta)) + (wavI * Math.sin(theta)))}\nimaginary = ${eval((wavI * Math.cos(theta)) - (wavR * Math.sin(theta)))}`)
+							dec()
+						}
+					});
+				});
+			});
+		});
+	});
+}
+
 function dec() {
-	readline.question(`would you like to\n1: determine chance of quantum tunneling\n2: measure an entangled particle\n`, (choice) => {
+	readline.question(`would you like to\n1: determine chance of quantum tunneling\n2: measure an entangled particle\n3: evaluate the evolution of a wave function\n`, (choice) => {
 		choice = Number(choice)
 
 		console.clear()
 
-		if(isNaN(choice) || choice < 1 || choice > 2) {
+		if(isNaN(choice) || choice < 1 || choice > 3) {
 			console.log(`please enter a valid number`)
 			return dec()
 		} else if (choice === 1) {
@@ -118,6 +155,9 @@ function dec() {
 		} else if (choice === 2) {
 			console.clear()
 			entangle()
+		} else if (choice === 3) {
+			console.clear()
+			wave()
 		}
 	});
 }
