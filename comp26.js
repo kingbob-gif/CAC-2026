@@ -45,7 +45,7 @@ function tunnel() {
 						if (!isNaN(h)) {
 							k = (Math.sqrt((2 * m) * (V0 - E))) / h
 							T = Math.E ** (-2 * k * a)
-							console.log(`${eval(T * 100)}%`)
+							console.log(`${T * 100}%`)
 							dec()
 						}
 					});
@@ -130,7 +130,7 @@ function wave() {
 
 						if (!isNaN(time)) {
 							theta = (E * time) / h
-							console.log(`real = ${eval((wavR * Math.cos(theta)) + (wavI * Math.sin(theta)))}\nimaginary = ${eval((wavI * Math.cos(theta)) - (wavR * Math.sin(theta)))}`)
+							console.log(`real = ${(wavR * Math.cos(theta)) + (wavI * Math.sin(theta))}\nimaginary = ${(wavI * Math.cos(theta)) - (wavR * Math.sin(theta))}`)
 							dec()
 						}
 					});
